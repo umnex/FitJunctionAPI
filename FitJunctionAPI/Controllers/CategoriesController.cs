@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
+
 namespace FitJunctionAPI.Controllers
 {
     [Route("[controller]")]
@@ -11,7 +12,7 @@ namespace FitJunctionAPI.Controllers
 
       
 
-        private List<Category> Categories = new List<Category> {
+        private static List<Category> Categories = new List<Category> {
 
             new Category() { CategoryId = 1,  CategoryName = "T-Shirts"},
             new Category() { CategoryId = 2,  CategoryName = "Track Suits"},
@@ -27,7 +28,7 @@ namespace FitJunctionAPI.Controllers
         }
 
         [HttpGet]
-        public List<Category> Get(string categoryname = null)
+        public ActionResult<List<Category>> Get(string categoryname = null)
         {
 
             if (categoryname == null)
@@ -39,10 +40,47 @@ namespace FitJunctionAPI.Controllers
             else
             {
 
-                return Categories.FindAll(e => e.CategoryName.ToLower().StartsWith(categoryname.ToLower()));
+                return Ok(Categories.FindAll(e => e.CategoryName.ToLower().StartsWith(categoryname.ToLower())));
 
             }
         }
+
+
+        [HttpPost]
+        public ActionResult Post(Category category)
+
+        {
+
+
+            if (Categories.Find(c => c.CategoryId==category.CategoryId || c.CategoryName.ToLower()==category.CategoryName.ToLower()) == null)
+            {
+                
+                
+                Categories.Add(category);
+
+                return Ok();
+
+
+
+            }
+            else
+            {
+
+
+                return Conflict(new { status = 409, title = "Conflict",  message="Category Id or Category Name already exists." });
+
+
+
+
+            }
+            
+            
+
+           
+           
+        }
+
+
 
     }
 }
