@@ -27,12 +27,21 @@ namespace FitJunctionAPI.Controllers
         }
 
         [HttpGet]
-        public List<Category> Get()
+        public List<Category> Get(string categoryname = null)
         {
 
-            return Categories;
+            if (categoryname == null)
+            {
 
+                return Categories;
 
+            }
+            else
+            {
+
+                return Categories.FindAll(e => e.CategoryName.ToLower().StartsWith(categoryname.ToLower()));
+
+            }
         }
 
     }
