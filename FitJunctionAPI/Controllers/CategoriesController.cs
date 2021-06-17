@@ -21,7 +21,7 @@ namespace FitJunctionAPI.Controllers
 
         private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(ILogger<WeatherForecastController> logger)
+        public CategoriesController(ILogger<CategoriesController> logger)
         {
             _logger = logger;
         }
