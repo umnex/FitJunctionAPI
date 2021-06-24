@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
@@ -26,6 +27,7 @@ namespace FitJunctionAPI.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [HttpGet]
         public List<Product> Get()
         {
